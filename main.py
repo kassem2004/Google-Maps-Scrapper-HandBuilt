@@ -22,6 +22,7 @@ class Place:
     place_type: str = ""
     opens_at: str = ""
     introduction: str = ""
+    image_url: str = ""
 
 def setup_logging():
     logging.basicConfig(
@@ -35,6 +36,15 @@ def extract_text(page: Page, xpath: str) -> str:
             return page.locator(xpath).inner_text()
     except Exception as e:
         logging.warning(f"Failed to extract text for xpath {xpath}: {e}")
+    return ""
+
+def extract_attribute(page: Page, xpath: str, attribute: str) -> str:
+    try:
+        locator = page.locator(xpath)
+        if locator.count() > 0:
+            return locator.first.get_attribute(attribute) or ""
+    except Exception as e:
+        logging.warning(f"Failed to extract attribute '{attribute}' for xpath {xpath}: {e}")
     return ""
 
 def extract_place(page: Page) -> Place:
@@ -52,6 +62,7 @@ def extract_place(page: Page) -> Place:
     opens_at_xpath2 = '//div[@class="MkV9"]//span[@class="ZDu9vd"]//span[2]'
     place_type_xpath = '//div[@class="LBgpqf"]//button[@class="DkEaL "]'
     intro_xpath = '//div[@class="WeS02d fontBodyMedium"]//div[@class="PYvSYb "]'
+    image_xpath = '//button[contains(@aria-label, "Photo")]//img | //img[@class="S9kvJb"]'
 
     place = Place()
     place.name = extract_text(page, name_xpath)
@@ -60,6 +71,7 @@ def extract_place(page: Page) -> Place:
     place.phone_number = extract_text(page, phone_number_xpath)
     place.place_type = extract_text(page, place_type_xpath)
     place.introduction = extract_text(page, intro_xpath) or "None Found"
+    place.image_url = extract_attribute(page, image_xpath, "src")
 
     # Reviews Count
     reviews_count_raw = extract_text(page, reviews_count_xpath)

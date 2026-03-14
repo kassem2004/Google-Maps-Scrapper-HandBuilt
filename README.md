@@ -21,7 +21,7 @@ To do a custom web scraping project you can find me on Upwork
 - Google Chrome or Chromium browser installed (for Playwright)
 
 ## Key Features
-- Data Scraping: The script scrapes data from Google Maps listings, extracting valuable information about businesses, such as their name, address, website, and contact details.
+- Data Scraping: The script scrapes data from Google Maps listings, extracting valuable information about businesses, such as their name, address, website, contact details, and image URL.
 
 - Review Analysis: It extracts review counts and average ratings, providing insights into businesses' online reputation.
 
@@ -71,7 +71,7 @@ Append new results to an existing CSV file:
 python main.py -s "Turkish Restaurants in Toronto Canada" -t 20 -o toronto_turkish_restaurants.csv --append
 ```
 
-The script will launch a browser, perform the search, and start scraping information. Progress will be displayed in the terminal, and results will be saved to the specified CSV file. If `--append` is used, new results will be added to the end of the file without removing previous data.
+The script will launch a browser, perform the search, and start scraping information. Progress will be displayed in the terminal, and results will be saved to the specified CSV file. The exported data now includes an `image_url` column for each listing when available. If `--append` is used, new results will be added to the end of the file without removing previous data.
 
 ## Notes
 - The script opens a visible browser window (not headless) for scraping.
